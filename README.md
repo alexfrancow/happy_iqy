@@ -2,7 +2,9 @@
 
 Excel Web Query - What in the world is that? If you are like the other 99.9% of MS Excel users, you probably have never heard of microsoft excel web queries (note: statistic made up).
 
-![](https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/2018-09-21_122613.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/2018-09-21_122613.png"/>
+</p>
 
 Excel web queries are powerful! Web queries are basically like having a web browser built into Excel that attempts to format the content, putting individual pieces of data into separate cells. You can then use Excel formulas (like =A1/B2) to work directly with the data you've downloaded. And you don't have to know anything about perl, cgi, php, javascript, etc.
 
