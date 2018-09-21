@@ -40,3 +40,23 @@ WEB
 1
 https://www.google.com/search?q=["keyword","Enter the Search Term:"]
 ```
+
+## Configuration
+
+You must create an '.iqy' file and add the following lines:
+
+```iqy
+WEB
+1
+<URL for '.dat' file>
+```
+
+You can choose any example of this repository, in the url for the .dat file add the raw of any example.
+
+### Calc example
+
+```iqy
+WEB
+1
+https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/calc-excel2016.dat
+```
