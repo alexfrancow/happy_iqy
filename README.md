@@ -41,6 +41,20 @@ WEB
 https://www.google.com/search?q=["keyword","Enter the Search Term:"]
 ```
 
+Luckily, as long as Microsoft Office is configured to block external content (which it is by default), when Excel launches users will be presented with a warning prompt:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/2018-09-21_123927.png"/>
+</p>
+
+iqy-user-warning-prompt-1Unfortunately, similar prompts haven't stopped users from enabling macros in suspicious documents, and there's little reason to expect it will be a 100% effective deterrent here, either.
+
+Once enabled, the .iqy file is free to download the PowerShell script. Thankfully, before it can run the user has to respond to another prompt:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/2018-09-21_124045.png"/>
+</p>
+
 ## Configuration
 
 You must create an '.iqy' file and add the following lines:
