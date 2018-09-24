@@ -92,7 +92,7 @@ When the user clicks on the '.iqy' file, the pc automatically opens a PowerShell
 ### Install Ruby on Rails
 
 ```bash
-sudo apt-get install rubygems or sudo apt-get install rubygems-integration
+sudo apt-get install rubygems ruby-dev or sudo apt-get install rubygems-integration
 sudo gem install tumble
 sudo gem install rails
 
