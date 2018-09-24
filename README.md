@@ -97,6 +97,7 @@ When the user clicks on the '.iqy' file, the pc automatically opens a PowerShell
 
 ```bash
 sudo apt-get install rubygems ruby-dev or sudo apt-get install rubygems-integration
+sudo apt-get install build-essential zlib1g-dev
 sudo gem install tumble
 sudo gem install rails
 
