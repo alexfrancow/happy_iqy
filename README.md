@@ -83,6 +83,10 @@ https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/calc-exc
 
 When the user clicks on the '.iqy' file, the pc automatically opens a PowerShell and sends a post request to the ruby server. In this post we send the basic information of PC pc and save it in a BD.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/rails_architecture.png"/>
+</p>
+
 > Rails cheatsheet: https://gist.github.com/mdang/95b4f54cadf12e7e0415
 
 ### Install Ruby on Rails
