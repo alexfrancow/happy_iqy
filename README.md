@@ -153,7 +153,7 @@ Edit ```app/controllers/users_controller.rb```
 ```rb
 class UsersController < ApplicationController
   def index
-    @users = users.all
+    @users = User.all
   end
   
   def new
@@ -170,8 +170,22 @@ Now the controller can find all the users. But how do we tie this to a url? We h
 Automagically create all the routes for a RESTful resource:
 
 ```rb
-resources :users 
+Rails.application.routes.draw do
+  get 'users/index'
+  get 'users/new'
+  get 'users/create'
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  #resources :users
+end
 ```
+
+To make one route the main you must specify: 
+
+```rb
+get '/' => 'users#index'
+```
+
+> https://gist.github.com/mdang/95b4f54cadf12e7e0415#routes
 
 Routes.rb can look arcane to new users. Luckily there is a way to decipher this mess. There is routes rake task to display all your routing information. Run that now and take a peek inside: 
 
@@ -179,7 +193,7 @@ Routes.rb can look arcane to new users. Luckily there is a way to decipher this 
 rake routes
 ```
 
-Now we need to create a template to display all our books. Create a new file called ```/app/views/books/index.html.erb``` and paste this: 
+Now we need to create a template to display all our books. Create a new file called ```app/views/users/index.html.erb``` and paste this: 
 
 ```html
 <% for user in @users do %>
