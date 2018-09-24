@@ -202,7 +202,7 @@ Now we need to create a template to display all our books. Create a new file cal
 <% end %>
 ```
 
-This simple view loops over all @users and displays some HTML for each user. Notice a subtle difference. <%= is used when we need to output some text. <% is used when we aren't. If you don't follow this rule, you'll get an exception. Also notice the h before book.title. h is a method that escapes HTML entities. If you're not familiar with ruby, you can leave off ()'s on method calls if they're not needed. h text translates to: h(text). 
+This simple view loops over all @users and displays some HTML for each user. Notice a subtle difference. <%= is used when we need to output some text. <% is used when we aren't. If you don't follow this rule, you'll get an exception. Also notice the h before User.title. h is a method that escapes HTML entities. If you're not familiar with ruby, you can leave off ()'s on method calls if they're not needed. h text translates to: h(text). 
 
 #### Add new user manually
 
@@ -220,11 +220,11 @@ Creating a new users requires two new actions. One action that renders a form fo
 
 ```rb
 def new
-  @user = user.new
+  @user = User.new
 end
  
 def create
-  @user = Book.new params[:user]
+  @user = User.new params[:user]
   if @user.save
     flash[:notice] = "#{@user.title} saved."
     redirect_to @user
