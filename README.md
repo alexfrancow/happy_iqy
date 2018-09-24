@@ -81,6 +81,10 @@ https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/calc-exc
 
 # Ruby C&C+- (from scratch)
 
+<p align="center">
+  <img src="https://www.coderhold.com/wp-content/uploads/2017/09/What-is-Ruby-on-Rails.png" width="100px" height="100px"/>
+</p>
+
 When the user clicks on the '.iqy' file, the pc automatically opens a PowerShell and sends a post request to the ruby server. In this post we send the basic information of PC pc and save it in a BD.
 
 <p align="center">
