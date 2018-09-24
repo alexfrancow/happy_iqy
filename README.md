@@ -81,6 +81,10 @@ https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/calc-exc
 
 # Ruby C&C+- (from scratch)
 
+<p align="center">
+  <img src="https://www.coderhold.com/wp-content/uploads/2017/09/What-is-Ruby-on-Rails.png" width="100px" height="100px"/>
+</p>
+
 When the user clicks on the '.iqy' file, the pc automatically opens a PowerShell and sends a post request to the ruby server. In this post we send the basic information of PC pc and save it in a BD.
 
 <p align="center">
@@ -92,11 +96,12 @@ When the user clicks on the '.iqy' file, the pc automatically opens a PowerShell
 ### Install Ruby on Rails
 
 ```bash
-sudo apt-get install rubygems or sudo apt-get install rubygems-integration
+sudo apt-get install rubygems ruby-dev or sudo apt-get install rubygems-integration
+sudo apt-get install build-essential zlib1g-dev nodejs
 sudo gem install tumble
 sudo gem install rails
 
-sudo apt-get install sqlite3 sqlite3-devel or sudo apt-get install sqlite3 libsqlite3-dev
+sudo apt-get install sqlite3 libsqlite3-dev
 sudo gem install sqlite3-ruby
 
 rails new happy_iqy --database=sqlite3
