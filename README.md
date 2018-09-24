@@ -74,3 +74,6 @@ WEB
 1
 https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/calc-excel2016.dat
 ```
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-993ba4acde.gif"/>
+</p>
