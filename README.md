@@ -98,7 +98,7 @@ sudo gem install sqlite3-ruby
 rails new happy_iqy --database=sqlite3
 cd happy_iqy
 
-rake db:create
+#rake db:create
 rails server or rails s
 ```
 
@@ -135,27 +135,35 @@ rake db:migrate
 
 #### Create controllers
 
-Remember controllers? We need a controller to display all the users in the system. This scenario corresponds to the index action in our BooksController (books_controller.rb) which we don't have yet. Just like generating models, use a generator to create the controller: 
+Remember controllers? We need a controller to display all the users in the system. This scenario corresponds to the index action in our UsersController (users_controller.rb) which we don't have yet. Just like generating models, use a generator to create the controller.
+
+Generate a new controller with default actions, routes and views:
 
 ```
-rails generate controller Users
+rails generate controller Users index new create
 ```
 
-We need to define an action that finds and displays all books. How did we find all the users? Our strategy is use users.all and assign it to an instance variable (@var). Why an instance variable? We assign instance variables because views are rendered with the controllers binding. You're probably thinking bindings and instance variables...what's going on? Views have access to variables defined in actions but only instance variables. Why, because instance variables are scoped to the object and not the action. Let's see some code: 
+We need to define an action that finds and displays all users. How did we find all the users? Our strategy is use users.all and assign it to an instance variable (@var). Why an instance variable? We assign instance variables because views are rendered with the controllers binding. You're probably thinking bindings and instance variables...what's going on? Views have access to variables defined in actions but only instance variables. Why, because instance variables are scoped to the object and not the action. Let's see some code: 
 Edit ```app/controllers/users_controller.rb```
 
 ```rb
 class UsersController < ApplicationController
-  # notice we've defined a method called index for a UsersController instance. We tie this together with routes
   def index
-    @users = users.all # instance variables are prefixed with an @. If we said books = Book.all, we wouldn't be able to access books in the template
+    @users = users.all
+  end
+  
+  def new
+  end
+  
+  def create
   end
 end
 ```
 
 #### Create routes
 
-Now the controller can find all the users. But how do we tie this to a url? We have to create some routes. Rails comes with some handy functions for generating RESTful routes (another Rails design principle). This will generate urls like /makes and /makes/1 combined with HTTP verbs to determine what method to call in our controller. Use map.resources to create RESTful routes. Open up ```/config/routes.rb``` and change it to this: 
+Now the controller can find all the users. But how do we tie this to a url? We have to create some routes. Rails comes with some handy functions for generating RESTful routes (another Rails design principle). This will generate urls like /makes and /makes/1 combined with HTTP verbs to determine what method to call in our controller. Use map.resources to create RESTful routes. Open up ```/config/routes.rb``` and change it.
+Automagically create all the routes for a RESTful resource:
 
 ```rb
 resources :users 
@@ -166,3 +174,36 @@ Routes.rb can look arcane to new users. Luckily there is a way to decipher this 
 ```bash
 rake routes
 ```
+
+Now we need to create a template to display all our books. Create a new file called ```/app/views/books/index.html.erb``` and paste this: 
+
+```html
+<% for user in @users do %>
+  <h2><%=h user.whoami %></h2>
+  <p><%= user.ip %></p>
+<% end %>
+```
+
+This simple view loops over all @users and displays some HTML for each user. Notice a subtle difference. <%= is used when we need to output some text. <% is used when we aren't. If you don't follow this rule, you'll get an exception. Also notice the h before book.title. h is a method that escapes HTML entities. If you're not familiar with ruby, you can leave off ()'s on method calls if they're not needed. h text translates to: h(text). 
+
+#### POST new user
+
+Creating a new users requires two new actions. One action that renders a form for a new user. This action is named 'new'. The second is named 'create.' This action takes the form parameters and saves them in the database. Open up your ```users_controller.rb``` and add these actions
+
+```
+def new
+  @user = user.new
+end
+ 
+def create
+  @user = Book.new params[:user]
+  if @user.save
+    flash[:notice] = "#{@user.title} saved."
+    redirect_to @user
+  else
+    render :new
+  end
+end
+```
+
+Make a POST request to: ```/users/new```
