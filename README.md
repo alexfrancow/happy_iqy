@@ -101,7 +101,7 @@ sudo apt-get install build-essential zlib1g-dev
 sudo gem install tumble
 sudo gem install rails
 
-sudo apt-get install sqlite3 sqlite3-devel or sudo apt-get install sqlite3 libsqlite3-dev
+sudo apt-get install sqlite3 libsqlite3-dev
 sudo gem install sqlite3-ruby
 
 rails new happy_iqy --database=sqlite3
