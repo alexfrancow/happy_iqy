@@ -28,8 +28,8 @@ Want to see how this would apply to a Google search? The form that I used above 
 
 ```html
 <form action="https://www.google.com/search">
-<input type="text" name="q" value="excel web query">
-<input type="submit" value="Search Google">
+  <input type="text" name="q" value="excel web query">
+  <input type="submit" value="Search Google">
 </form>
 ```
 
