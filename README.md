@@ -204,7 +204,17 @@ Now we need to create a template to display all our books. Create a new file cal
 
 This simple view loops over all @users and displays some HTML for each user. Notice a subtle difference. <%= is used when we need to output some text. <% is used when we aren't. If you don't follow this rule, you'll get an exception. Also notice the h before book.title. h is a method that escapes HTML entities. If you're not familiar with ruby, you can leave off ()'s on method calls if they're not needed. h text translates to: h(text). 
 
-#### POST new user
+#### ADD new user manually
+
+```rb
+rails console
+> user = User.new :whoami => 'alexfrancow' , :ip => '127.0.0.1'
+> user.save
+> User.all
+> exit
+```
+
+#### ADD new user via POST request
 
 Creating a new users requires two new actions. One action that renders a form for a new user. This action is named 'new'. The second is named 'create.' This action takes the form parameters and saves them in the database. Open up your ```users_controller.rb``` and add these actions
 
