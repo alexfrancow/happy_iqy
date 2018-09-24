@@ -77,3 +77,92 @@ https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/calc-exc
 <p align="center">
   <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-993ba4acde.gif"/>
 </p>
+
+
+# Ruby C&C+- (from scratch)
+
+When the user clicks on the '.iqy' file, the pc automatically opens a PowerShell and sends a post request to the ruby server. In this post we send the basic information of PC pc and save it in a BD.
+
+> Rails cheatsheet: https://gist.github.com/mdang/95b4f54cadf12e7e0415
+
+### Install Ruby on Rails
+
+```bash
+sudo apt-get install rubygems or sudo apt-get install rubygems-integration
+sudo gem install tumble
+sudo gem install rails
+
+sudo apt-get install sqlite3 sqlite3-devel or sudo apt-get install sqlite3 libsqlite3-dev
+sudo gem install sqlite3-ruby
+
+rails new happy_iqy --database=sqlite3
+cd happy_iqy
+
+rake db:create
+rails server or rails s
+```
+
+#### Create models
+
+Our application needs data. Remember what this means? It means models. Great, but how we generate a model? Rails comes with some generators to common tasks. The generator is the file /script/generate. The generator will create our model.rb file along with a migration to add the table to the database. A migration file contains code to add/drop tables, or alter/add/remove columns from tables. Migrations are executed in sequence to create the tables. Run migrations (and various other commands) with "rake". Rake is a ruby code runner. 
+
+```
+rails generate model User date:datetime whoami:string ip:string os:string 
+```
+
+##### Migration file
+
+```rb
+class CreateUsers < ActiveRecord::Migration[5.2]
+  def change
+    create_table :users do |t|
+      t.datetime :date
+      t.string :whoami
+      t.string :ip
+      t.string :os
+
+      t.timestamps
+    end
+  end
+end
+```
+
+Now, run the migration using the rake task db:migrate. db:migrate applies pending migrations: 
+
+```
+rake db:migrate
+```
+
+#### Create controllers
+
+Remember controllers? We need a controller to display all the users in the system. This scenario corresponds to the index action in our BooksController (books_controller.rb) which we don't have yet. Just like generating models, use a generator to create the controller: 
+
+```
+rails generate controller Users
+```
+
+We need to define an action that finds and displays all books. How did we find all the users? Our strategy is use users.all and assign it to an instance variable (@var). Why an instance variable? We assign instance variables because views are rendered with the controllers binding. You're probably thinking bindings and instance variables...what's going on? Views have access to variables defined in actions but only instance variables. Why, because instance variables are scoped to the object and not the action. Let's see some code: 
+Edit ```app/controllers/users_controller.rb```
+
+```rb
+class UsersController < ApplicationController
+  # notice we've defined a method called index for a UsersController instance. We tie this together with routes
+  def index
+    @users = users.all # instance variables are prefixed with an @. If we said books = Book.all, we wouldn't be able to access books in the template
+  end
+end
+```
+
+#### Create routes
+
+Now the controller can find all the users. But how do we tie this to a url? We have to create some routes. Rails comes with some handy functions for generating RESTful routes (another Rails design principle). This will generate urls like /makes and /makes/1 combined with HTTP verbs to determine what method to call in our controller. Use map.resources to create RESTful routes. Open up ```/config/routes.rb``` and change it to this: 
+
+```rb
+resources :users 
+```
+
+Routes.rb can look arcane to new users. Luckily there is a way to decipher this mess. There is routes rake task to display all your routing information. Run that now and take a peek inside: 
+
+```bash
+rake routes
+```
