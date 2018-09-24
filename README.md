@@ -193,7 +193,7 @@ Routes.rb can look arcane to new users. Luckily there is a way to decipher this 
 rake routes
 ```
 
-Now we need to create a template to display all our books. Create a new file called ```app/views/users/index.html.erb``` and paste this: 
+Now we need to create a template to display all our users. Create a new file called ```app/views/users/index.html.erb``` and paste this: 
 
 ```html
 <% for user in @users do %>
