@@ -230,6 +230,13 @@ Of course you can modify your own view, you can use a table by example:
 </table>
 ```
 
+To the style you can use Bootstrap 4:
+
+```bash
+cd app/assets/stylesheets
+wget https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css
+```
+
 This simple view loops over all @users and displays some HTML for each user. Notice a subtle difference. <%= is used when we need to output some text. <% is used when we aren't. If you don't follow this rule, you'll get an exception. Also notice the h before User.title. h is a method that escapes HTML entities. If you're not familiar with ruby, you can leave off ()'s on method calls if they're not needed. h text translates to: h(text). 
 
 #### Add new user manually
