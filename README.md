@@ -221,7 +221,7 @@ rails console
 
 #### Add new user via POST request
 
-Creating a new users requires two new actions. One action that renders a form for a new user. This action is named 'new'. The second is named 'create.' This action takes the form parameters and saves them in the database. Open up your ```users_controller.rb``` and add these actions
+Creating a new users requires two new actions. One action that renders a form for a new user. This action is named 'new'. The second is named 'create.' This action takes the form parameters and saves them in the database. Open up your ```app/controllers/users_controller.rb``` and add these actions
 
 ```rb
 def new
