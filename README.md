@@ -296,6 +296,10 @@ $json = $person | ConvertTo-Json
 $response = Invoke-RestMethod 'http://localhost:3000/users/create' -Method Post -Body $json -ContentType 'application/json'
 ```
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-755a6218b2.gif"/>
+</p>
+
 ##### Delete users from DB
 
 ```rb
