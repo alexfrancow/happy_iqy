@@ -207,6 +207,29 @@ Now we need to create a template to display all our users. Create a new file cal
 <% end %>
 ```
 
+Of course you can modify your own view, you can use a table by example:
+
+```html
+<table>
+  <tr>
+    <th>Username</th>
+    <th>IP</th>
+    <th>OS</th>
+    <th>Datetime</th>
+  </tr>
+
+  <% for user in @users do %>
+  <tr>
+    <td><%= user.whoami %></td>
+    <td><%= user.ip %></td>
+    <td><%= user.os %></td>
+    <td><%= user.date %></td>
+  </tr>
+  <% end %>
+
+</table>
+```
+
 This simple view loops over all @users and displays some HTML for each user. Notice a subtle difference. <%= is used when we need to output some text. <% is used when we aren't. If you don't follow this rule, you'll get an exception. Also notice the h before User.title. h is a method that escapes HTML entities. If you're not familiar with ruby, you can leave off ()'s on method calls if they're not needed. h text translates to: h(text). 
 
 #### Add new user manually
