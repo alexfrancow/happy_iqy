@@ -276,4 +276,5 @@ rails console
 # => 13 
 > User.count
 # => 0
+> exit
 ```
