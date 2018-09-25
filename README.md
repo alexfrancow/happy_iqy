@@ -238,7 +238,7 @@ Creating a new users requires two new actions. One action that renders a form fo
   end
 ```
 
-Make a POST request to: ```/users/create``` with cURL:
+- Make a POST request to: ```/users/create``` with cURL:
 
 ```bash
 curl -H "Accept: application/json" -H "Content-Type:application/json" \
@@ -246,7 +246,7 @@ curl -H "Accept: application/json" -H "Content-Type:application/json" \
 http://localhost:3000/users/create -w '\n%{http_code}\n' -s
 ```
 
-Make a POST request to: ```/users/create``` with PowerShell (Invoke-RestMethod):
+- Make a POST request to: ```/users/create``` with PowerShell (Invoke-RestMethod):
 
 ```powershell
 $user = @{
