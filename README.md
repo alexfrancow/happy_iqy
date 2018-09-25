@@ -149,7 +149,7 @@ Remember controllers? We need a controller to display all the users in the syste
 Generate a new controller with default actions, routes and views:
 
 ```
-rails generate controller Users index new create
+rails generate controller Users index user_params create
 ```
 
 We need to define an action that finds and displays all users. How did we find all the users? Our strategy is use users.all and assign it to an instance variable (@var). Why an instance variable? We assign instance variables because views are rendered with the controllers binding. You're probably thinking bindings and instance variables...what's going on? Views have access to variables defined in actions but only instance variables. Why, because instance variables are scoped to the object and not the action. Let's see some code: 
@@ -177,8 +177,8 @@ Automagically create all the routes for a RESTful resource:
 ```rb
 Rails.application.routes.draw do
   get 'users/index'
-  get 'users/new'
   get 'users/create'
+  post 'users/create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #resources :users
 end
@@ -224,19 +224,24 @@ rails console
 Creating a new users requires two new actions. One action that renders a form for a new user. This action is named 'new'. The second is named 'create.' This action takes the form parameters and saves them in the database. Open up your ```app/controllers/users_controller.rb``` and add these actions
 
 ```rb
-def new
-  @user = User.new
-end
- 
-def create
-  @user = User.new params[:user]
-  if @user.save
-    flash[:notice] = "#{@user.title} saved."
-    redirect_to @user
-  else
-    render :new
+  def user_params
+        params.require(:user).permit(:whoami, :ip, :os)
   end
-end
+
+  def create
+        @user = User.new(user_params)
+        if @user.save
+                render json: @user, status: :created
+        else
+                render json: @user.errors, status: :unprocessable_entity
+        end
+  end
 ```
 
-Make a POST request to: ```/users/new```
+Make a POST request to: ```/users/new``` with cURL:
+
+```bash
+curl -H "Accept: application/json" -H "Content-Type:application/json" \
+-X POST -d '{ "user" : {"whoami": "alexfrancow2","ip": "127.0.0.1", "os": "windows10"} }' \
+http://localhost:3000/users/create -w '\n%{http_code}\n' -s
+```
