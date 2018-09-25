@@ -238,10 +238,22 @@ Creating a new users requires two new actions. One action that renders a form fo
   end
 ```
 
-Make a POST request to: ```/users/new``` with cURL:
+Make a POST request to: ```/users/create``` with cURL:
 
 ```bash
 curl -H "Accept: application/json" -H "Content-Type:application/json" \
 -X POST -d '{ "user" : {"whoami": "alexfrancow2","ip": "127.0.0.1", "os": "windows10"} }' \
 http://localhost:3000/users/create -w '\n%{http_code}\n' -s
 ```
+
+Make a POST request to: ```/users/create``` with PowerShell (Invoke-RestMethod):
+
+```powershell
+$user = @{
+    whoami='joe'
+    ip='doe'
+}
+$json = $person | ConvertTo-Json
+$response = Invoke-RestMethod 'http://localhost:3000/users/create' -Method Post -Body $json -ContentType 'application/json'
+```
+
