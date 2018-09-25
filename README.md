@@ -272,7 +272,7 @@ Creating a new users requires two new actions. One action that renders a form fo
 
 ```bash
 curl -H "Accept: application/json" -H "Content-Type:application/json" \
--X POST -d '{ "user" : {"whoami": "alexfrancow2","ip": "127.0.0.1", "os": "windows10"} }' \
+-X POST -d '{ "user" : {"whoami": "Juan","ip": "192.168.0.1", "os": "Windows 7", "date": "2018-09-25 11:30:40"} }' \
 http://localhost:3000/users/create -w '\n%{http_code}\n' -s
 ```
 
