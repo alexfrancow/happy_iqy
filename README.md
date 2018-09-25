@@ -266,3 +266,14 @@ $json = $person | ConvertTo-Json
 $response = Invoke-RestMethod 'http://localhost:3000/users/create' -Method Post -Body $json -ContentType 'application/json'
 ```
 
+##### Delete users from DB
+
+```rb
+rails console
+> User.count
+# => 13
+> User.delete_all
+# => 13 
+> User.count
+# => 0
+```
