@@ -312,3 +312,170 @@ rails console
 # => 0
 > exit
 ```
+
+#### Action Cable
+
+```bash
+rails generate channel User
+Running via Spring preloader in process 300
+      create  app/channels/user_channel.rb
+   identical  app/assets/javascripts/cable.js
+      create  app/assets/javascripts/channels/user.coffee
+```
+
+Edit ```app/channels/user_channel.rb```:
+
+```rb
+class UserChannel < ApplicationCable::Channel
+  def subscribed
+    stream_from "user_channel"
+  end
+
+  def unsubscribed
+    # Any cleanup needed when channel is unsubscribed
+  end
+end
+```
+
+Edit ```config/routes.rb```
+
+```rb
+Rails.application.routes.draw do
+  get 'users/index'
+  get 'users/json'
+  post 'users/create'
+  get 'users/create'
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '/' => 'users#index'
+  mount ActionCable.server, at: '/cable'
+end
+```
+
+Edit ```app/models/user.rb```:
+
+```rb
+class User < ApplicationRecord
+  after_create_commit { UserBroadcastJob.perform_later self }
+  after_update_commit { UserBroadcastJob.perform_later self }
+  after_destroy { UserBroadcastJob.perform_later self }
+end
+```
+
+Edit ```app/jobs/user_broadcast_job.rb ```, this file will load a partial template, what it means?, well it will try load ```app/views/users/_index.html.erb``` so we need to create this template too.
+
+```rb
+class UserBroadcastJob < ApplicationJob
+  queue_as :default
+
+  def perform(user)
+    ActionCable.server.broadcast 'user_channel', item: render(user)
+  end
+
+  private
+    def render(user)
+        ApplicationController.renderer.render(partial: 'users/index', locals: { user: user })
+    end
+end
+```
+
+Create and edit ``````app/views/users/_index.html.erb``````:
+
+```html
+<div class=“user”>
+  <p><%= user.whoami %></p>
+</div>
+```
+
+Edit ```app/assets/javascripts/channels/user.coffee```:
+
+```
+App.user = App.cable.subscriptions.create "UserChannel",
+  connected: ->
+    # Called when the subscription is ready for use on the server
+
+  disconnected: ->
+    # Called when the subscription has been terminated by the server
+
+  received: (data) ->
+    # Called when there's incoming data on the websocket for this channel
+    location.reload();
+```
+
+Finally we run the server and load the main page:
+
+```
+rails s
+=> Booting Puma
+=> Rails 5.2.1 application starting in development
+=> Run `rails server -h` for more startup options
+Puma starting in single mode...
+* Version 3.12.0 (ruby 2.5.1-p57), codename: Llamas in Pajamas
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/" for 127.0.0.1 at 2018-09-28 11:39:45 +0200
+   (0.3ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+  ↳ /var/lib/gems/2.5.0/gems/activerecord-5.2.1/lib/active_record/log_subscriber.rb:98
+Processing by UsersController#index as HTML
+  Rendering users/index.html.erb within layouts/application
+  User Load (0.5ms)  SELECT "users".* FROM "users"
+  ↳ app/views/users/index.html.erb:10
+  Rendered users/index.html.erb within layouts/application (29.3ms)
+Completed 200 OK in 447ms (Views: 429.5ms | ActiveRecord: 1.7ms)
+
+Started GET "/cable" for 127.0.0.1 at 2018-09-28 11:39:57 +0200
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-28 11:39:57 +0200
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: keep-alive, Upgrade, HTTP_UPGRADE: websocket)
+UserChannel is transmitting the subscription confirmation
+UserChannel is streaming from user_channel
+```
+
+Make a post request:
+
+```bash
+curl -H "Accept: application/json" -H "Content-Type:application/json" \
+-X POST -d '{ "user" : {"whoami": "Juan6","ip": "192.168.0.1", "os": "Windows 7", "date": "2018-09-25 11:30:40"} }' \
+http://localhost:3000/users/create -w '\n%{http_code}\n' -s
+```
+
+Server log:
+
+```
+Started POST "/users/create" for 127.0.0.1 at 2018-09-28 11:40:42 +0200
+Processing by UsersController#create as JSON
+  Parameters: {"user"=>{"whoami"=>"Juan6", "ip"=>"192.168.0.1", "os"=>"Windows 7", "date"=>"2018-09-25 11:30:40"}}
+   (0.3ms)  begin transaction
+  ↳ app/controllers/users_controller.rb:18
+  User Create (2.9ms)  INSERT INTO "users" ("date", "whoami", "ip", "os", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["date", "2018-09-25 11:30:40"], ["whoami", "Juan6"], ["ip", "192.168.0.1"], ["os", "Windows 7"], ["created_at", "2018-09-28 09:40:42.150198"], ["updated_at", "2018-09-28 09:40:42.150198"]]
+  ↳ app/controllers/users_controller.rb:18
+   (116.9ms)  commit transaction
+  ↳ app/controllers/users_controller.rb:18
+[ActiveJob] Enqueued UserBroadcastJob (Job ID: 58d9e9b7-2031-4034-8d8d-1d9fa57630dc) to Async(default) with arguments: #<GlobalID:0x00007f43a824b6f0 @uri=#<URI::GID gid://happy-iqy/User/46>>
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 46], ["LIMIT", 1]]
+Completed 201 Created in 212ms (Views: 0.5ms | ActiveRecord: 120.1ms)
+
+
+  ↳ /var/lib/gems/2.5.0/gems/activerecord-5.2.1/lib/active_record/log_subscriber.rb:98
+[ActiveJob] [UserBroadcastJob] [58d9e9b7-2031-4034-8d8d-1d9fa57630dc] Performing UserBroadcastJob (Job ID: 58d9e9b7-2031-4034-8d8d-1d9fa57630dc) from Async(default) with arguments: #<GlobalID:0x00007f43a8256ca8 @uri=#<URI::GID gid://happy-iqy/User/46>>
+[ActiveJob] [UserBroadcastJob] [58d9e9b7-2031-4034-8d8d-1d9fa57630dc]   Rendered users/_index.html.erb (1.1ms)
+[ActiveJob] [UserBroadcastJob] [58d9e9b7-2031-4034-8d8d-1d9fa57630dc] [ActionCable] Broadcasting to user_channel: {:item=>"<div class=“user”>\n  <p>Juan6</p>\n</div>\n"}
+[ActiveJob] [UserBroadcastJob] [58d9e9b7-2031-4034-8d8d-1d9fa57630dc] Performed UserBroadcastJob (Job ID: 58d9e9b7-2031-4034-8d8d-1d9fa57630dc) from Async(default) in 27.91ms
+UserChannel transmitting {"item"=>"<div class=“user”>\n  <p>Juan6</p>\n</div>\n"} (via streamed from user_channel)
+Finished "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-28 11:40:42 +0200
+UserChannel stopped streaming from user_channel
+Started GET "/" for 127.0.0.1 at 2018-09-28 11:40:42 +0200
+Processing by UsersController#index as HTML
+  Rendering users/index.html.erb within layouts/application
+  User Load (0.6ms)  SELECT "users".* FROM "users"
+  ↳ app/views/users/index.html.erb:10
+  Rendered users/index.html.erb within layouts/application (10.6ms)
+Completed 200 OK in 67ms (Views: 62.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/cable" for 127.0.0.1 at 2018-09-28 11:40:42 +0200
+Started GET "/cable/" [WebSocket] for 127.0.0.1 at 2018-09-28 11:40:42 +0200
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: keep-alive, Upgrade, HTTP_UPGRADE: websocket)
+UserChannel is transmitting the subscription confirmation
+UserChannel is streaming from user_channel
+```
