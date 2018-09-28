@@ -395,7 +395,7 @@ Create and edit ``````app/views/users/_index.html.erb``````:
 
 Edit ```app/assets/javascripts/channels/user.coffee```:
 
-```
+```coffee
 App.user = App.cable.subscriptions.create "UserChannel",
   connected: ->
     # Called when the subscription is ready for use on the server
