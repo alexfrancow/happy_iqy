@@ -315,6 +315,8 @@ rails console
 
 ### Action Cable
 
+Action Cable seamlessly integrates WebSockets with the rest of your Rails application. It allows for real-time features to be written in Ruby in the same style and form as the rest of your Rails application, while still being performant and scalable. It's a full-stack offering that provides both a client-side JavaScript framework and a server-side Ruby framework. You have access to your full domain model written with Active Record or your ORM of choice.
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/1473343848-1462551406-rails-rack.png"/>
 </p>
@@ -484,6 +486,8 @@ Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: keep-a
 UserChannel is transmitting the subscription confirmation
 UserChannel is streaming from user_channel
 ```
+
+> Other example: > https://melvinchng.github.io/rails/ActionCable.html#21-initial-setup 
 
 #### PoC Action Cable:
 
