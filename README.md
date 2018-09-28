@@ -368,7 +368,7 @@ class User < ApplicationRecord
 end
 ```
 
-Edit ```app/jobs/user_broadcast_job.rb ```, this file will load a partial template, what it means?, well it will try load ```app/views/users/_index.html.erb``` so we need to create this template too.
+Edit ```app/jobs/user_broadcast_job.rb ```, this file will load a partial template,  what does it mean?, well it will try load ```app/views/users/_index.html.erb``` so we also need to create this template.
 
 ```rb
 class UserBroadcastJob < ApplicationJob
