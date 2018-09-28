@@ -313,7 +313,12 @@ rails console
 > exit
 ```
 
-#### Action Cable
+### Action Cable
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/1473343848-1462551406-rails-rack.png"/>
+</p>
+
 
 ```bash
 rails generate channel User
@@ -479,3 +484,6 @@ Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: keep-a
 UserChannel is transmitting the subscription confirmation
 UserChannel is streaming from user_channel
 ```
+
+#### PoC Action Cable:
+
