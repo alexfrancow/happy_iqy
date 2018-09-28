@@ -495,3 +495,7 @@ UserChannel is streaming from user_channel
 <p align="center">
   <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-bd6806c2e2.gif"/>
 </p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-dc35878237.gif"/>
+</p>
