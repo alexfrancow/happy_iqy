@@ -491,3 +491,7 @@ UserChannel is streaming from user_channel
 
 #### PoC Action Cable:
 
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-bd6806c2e2.gif"/>
+</p>
