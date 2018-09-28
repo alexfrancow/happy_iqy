@@ -292,7 +292,7 @@ $user = @{
     os=$os
     date=$date
 }
-$json = $person | ConvertTo-Json
+$json = $user | ConvertTo-Json
 $response = Invoke-RestMethod 'http://localhost:3000/users/create' -Method Post -Body $json -ContentType 'application/json'
 ```
 
